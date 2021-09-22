@@ -10,5 +10,5 @@ import { getConnectionManager } from "typeorm";
     entities: ["src/entities/*.ts"]
    });
    await connection.connect();
-   
+   return connection;
 }
