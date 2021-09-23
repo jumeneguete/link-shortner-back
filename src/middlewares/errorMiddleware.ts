@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import httpStatus from "http-status";
 
 import ConflictError from "../errors/ConflictError";
-import EmailAlreadyRegistered from "../errors/EmailAlreadyRegistered";
 
 export default function errorMiddleware(
   err: Error,
@@ -10,6 +9,7 @@ export default function errorMiddleware(
   res: Response,
   _next: NextFunction
 ) {
+
   if (err instanceof ConflictError) {
     return res.status(httpStatus.CONFLICT).send({
       message: err.message,
