@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test npx jest -i",
-    "build": "NODE_ENV=production npx tsc --outDir dist",
-    "dev": "NODE_ENV=development npx nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\"",
-    "typeorm": "ts-node ./node_modules/typeorm/cli"
+    "test": "NODE_ENV=test npm run eslint:fix && npx jest -i",
+    "build": "NODE_ENV=production npm run eslint:fix && npx tsc --outDir dist",
+    "dev": "NODE_ENV=development npx nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"npm run eslint:fix && ts-node src/server.ts\"",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "eslint": "npx eslint src",
+    "eslint:fix": "npx eslint --fix src"
   },
   "keywords": [],
   "author": "",
