@@ -4,6 +4,8 @@ import faker from "faker";
 
 import app, { init } from "../../app";
 import { clearDatabase, endConnection } from "../utils/database";
+import { createUser } from '../factories/userFactory';
+import User from '../../entities/User';
 
 const agent =  supertest(app);
 
@@ -41,9 +43,25 @@ describe("POST /sign-up", () => {
         password: expect.any(String)
       })
     );
+
+    const userDatabase = await User.findOne({ email: userData.email });
+    expect(userDatabase?.email).toEqual(userData.email);
   });
 
-  // it("should not allow creation of user with email that has been already used", async () => {
-  
-  // });
+  it("should not allow creation of user with email that has been already used", async () => {
+    const user = await createUser();
+    const userData = {
+      name: faker.name.findName(),
+      image: faker.internet.avatar(),
+      email: user.email,
+      password: "123456"
+    };
+
+    const response = await agent.post("/sign-up").send(userData);
+
+    expect(response.statusCode).toEqual(httpStatus.CONFLICT);
+
+    const usersDatabase = await User.find({ email: userData.email });
+    expect(usersDatabase.length).toEqual(1);
+  });
 });
