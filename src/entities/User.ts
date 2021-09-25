@@ -4,12 +4,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-} from "typeorm";
-import bcrypt from "bcrypt";
-import EmailAlreadyRegistered from "../errors/EmailAlreadyRegistered";
-import Link from "./Link";
+} from 'typeorm';
+import bcrypt from 'bcrypt';
+import EmailAlreadyRegistered from '../errors/EmailAlreadyRegistered';
+import Link from './Link';
 
-@Entity("users")
+@Entity('users')
 export default class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,14 +29,10 @@ export default class User extends BaseEntity {
   @OneToMany(() => Link, (link) => link.user)
   links: Link[];
 
-  static async createNew(
-    name: string,
-    image: string,
-    email: string,
-    password: string
-  ) {
+  static async createNew(name: string, image: string, email: string, password: string) {
     await User.checkExistingEmail(email);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const hashedPassword = bcrypt.hashSync(password, 10);
 
     const newUser = User.create({ name, image, email, password });

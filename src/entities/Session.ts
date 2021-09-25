@@ -4,10 +4,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-} from "typeorm";
-import User from "./User";
+} from 'typeorm';
+import User from './User';
 
-@Entity("sessions")
+@Entity('sessions')
 export default class Session extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

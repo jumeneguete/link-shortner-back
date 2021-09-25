@@ -4,10 +4,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-} from "typeorm";
-import User from "./User";
+} from 'typeorm';
+import User from './User';
 
-@Entity("links")
+@Entity('links')
 export default class Link extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

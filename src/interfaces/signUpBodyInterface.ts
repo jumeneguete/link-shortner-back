@@ -1,4 +1,4 @@
-export interface signUpBody {
+export interface SignUpBody {
   name: string;
   image: string;
   email: string;

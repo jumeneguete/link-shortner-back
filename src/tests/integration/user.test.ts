@@ -1,11 +1,11 @@
-import supertest from "supertest";
-import httpStatus from "http-status";
-import faker from "faker";
+import supertest from 'supertest';
+import httpStatus from 'http-status';
+import faker from 'faker';
 
-import app, { init } from "../../app";
-import { clearDatabase, endConnection } from "../utils/database";
-import { createUser } from "../factories/userFactory";
-import User from "../../entities/User";
+import app, { init } from '../../app';
+import { clearDatabase, endConnection } from '../utils/database';
+import { createUser } from '../factories/userFactory';
+import User from '../../entities/User';
 
 const agent = supertest(app);
 
@@ -22,21 +22,21 @@ afterAll(async () => {
   await endConnection();
 });
 
-describe("POST /sign-up", () => {
+describe('POST /sign-up', () => {
   function createUserData() {
     const userData = {
       name: faker.name.findName(),
       image: faker.internet.avatar(),
       email: faker.internet.email(),
-      password: "123456",
+      password: '123456',
     };
     return userData;
   }
 
-  it("should create a new user", async () => {
+  it('should create a new user', async () => {
     const userData = createUserData();
 
-    const response = await agent.post("/sign-up").send(userData);
+    const response = await agent.post('/sign-up').send(userData);
 
     expect(response.statusCode).toEqual(httpStatus.CREATED);
     expect(response.body).toEqual(
@@ -53,12 +53,12 @@ describe("POST /sign-up", () => {
     expect(userDatabase?.email).toEqual(userData.email);
   });
 
-  it("should not allow creation of user with email that has been already used", async () => {
+  it('should not allow creation of user with email that has been already used', async () => {
     const user = await createUser();
     const userData = createUserData();
     userData.email = user.email;
 
-    const response = await agent.post("/sign-up").send(userData);
+    const response = await agent.post('/sign-up').send(userData);
 
     expect(response.statusCode).toEqual(httpStatus.CONFLICT);
 
